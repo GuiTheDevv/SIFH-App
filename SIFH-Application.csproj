@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>SIFH_Application</RootNamespace>
+  </PropertyGroup>
+  
+  <Target Name="BuildCss" BeforeTargets="Compile" >
+  <Exec Command="npm tailwindcss -i ./wwwroot/css/Input.css -o ./wwwroot/css/App.css" Condition="$(Configuration) == debug"/>
+  </Target>
+  
+</Project>
