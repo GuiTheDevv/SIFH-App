@@ -8,7 +8,7 @@
   </PropertyGroup>
   
   <Target Name="BuildCss" BeforeTargets="Compile" >
-  <Exec Command="npm tailwindcss -i ./wwwroot/css/Input.css -o ./wwwroot/css/App.css" Condition="$(Configuration) == debug"/>
+  <Exec Command="npx tailwindcss -i ./wwwroot/css/Input.css -o ./wwwroot/css/App.css" Condition="$(Configuration) == debug"/>
   </Target>
-  
+
 </Project>
