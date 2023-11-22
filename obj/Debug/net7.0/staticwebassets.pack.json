@@ -1,12 +1,12 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\guilherme\\Documents\\GitHub\\SIFH-Application\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\SIFH-Application.bundle.scp.css",
-      "PackagePath": "staticwebassets\\SIFH-Application.bundle.scp.css"
+      "Id": "C:\\Users\\guilherme\\Documents\\GitHub\\SIFH-Application\\wwwroot\\css\\App.css",
+      "PackagePath": "staticwebassets\\css\\App.css"
     },
     {
-      "Id": "C:\\Users\\guilherme\\Documents\\GitHub\\SIFH-Application\\wwwroot\\css\\site.css",
-      "PackagePath": "staticwebassets\\css\\site.css"
+      "Id": "C:\\Users\\guilherme\\Documents\\GitHub\\SIFH-Application\\wwwroot\\css\\Input.css",
+      "PackagePath": "staticwebassets\\css\\Input.css"
     },
     {
       "Id": "C:\\Users\\guilherme\\Documents\\GitHub\\SIFH-Application\\wwwroot\\favicon.ico",
