@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SD0yeW3/Q0rnq+DTqXN5rQSuTnycxVUWTSBTxv8R/i903oZ9pbS3YaOQmGBKXZtj4Vemww0pIN3aVbTQSrqagA==",
+  "dgSpecHash": "Lu9l5mWZiP5nqmOEIAWWtUnG7CLQ8rH2KK426/piGs04BEWdoVJr0syScemDWvA5pXeuhjiqxRCO/NLjwP0rBg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\guilherme\\Documents\\GitHub\\SIFH-Application\\SIFH-Application.csproj",
+  "projectFilePath": "C:\\Users\\guilherme\\Documents\\GitHub\\SIFHApp\\SIFHApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\guilherme\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\guilherme\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

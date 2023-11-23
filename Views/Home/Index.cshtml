@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model DataView
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,64 +13,84 @@
     <div class="mx-auto max-w-2xl">
     <div class="text-center">
       <h2 class="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
-        Receiving Note Details
+        Receiving Note
       </h2>
     </div>
 
     <!-- Card -->
     <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
       <form>
-        <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700" type="button">Vessel Name <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-        </svg>
-        </button>
-
-        <!-- Dropdown menu -->
-        <div id="dropdown" class="mb-4 sm:mb-8 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-              <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
-              </li>
-            </ul>
-        </div>
-
-        <div class="flex flex-col gap-y-3 mb-4 sm:mb-8">
-          <div class="flex">
-            <input type="radio" name="hs-radio-vertical-group" class="shrink-0 mt-0.5 border-gray-100 rounded-full text-blue-600 focus:ring-slate-900 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-radio-vertical-group-1" checked>
-            <label for="hs-radio-vertical-group-1" class="text-sm text-gray-500 ms-2 dark:text-gray-400">Tuna</label>
-          </div>
-        </div>
-
-        <div class="mb-4 sm:mb-8">
-          <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Weight</label>
-          <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter weight...">
-        </div>
-
-        <div class="mb-4 sm:mb-8">
-          <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Grade</label>
-          <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter grade...">
-        </div>
-
-        <div class="mb-4 sm:mb-8">
-          <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Quantity</label>
-          <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter quantity...">
-        </div>
-
         <div class="mb-4 sm:mb-8">
           <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Reference Number</label>
           <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter reference number...">
         </div>
+
+        <div class="mb-4 sm:mb-8">
+            <button id="dropdownVesselButton" data-dropdown-toggle="dropdownVessel" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 w-fit" type="button">Vessel
+                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Dropdown menu -->
+        <div id="dropdownVessel" class="mb-4 sm:mb-8 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                @foreach(var vessel in Model.Vessels){
+                    <li>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">@vessel.VesselName</a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="mb-4 sm:mb-8 ">
+          <h2 class="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
+            Items
+          </h2>
+        </div>
+
+        <div class="flex flex-col mb-4 sm:mb-8 text-sm">
+            <button id="dropdownProductButton" data-dropdown-toggle="dropdownProduct" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 justify-between" type="button">
+                <p>Product</p>
+                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div id="dropdownProduct" class="mb-4 sm:mb-8 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    @foreach(var product in Model.Products){
+                        <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">@product.ProductName</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="mb-4 sm:mb-8">
+              <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Weight (lbs)</label>
+              <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter weight...">
+            </div>
+
+            <div class="mb-4 sm:mb-8">
+              <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Grade</label>
+              <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter grade...">
+            </div>
+
+            <div class="mb-4 sm:mb-8">
+              <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Temperature (F&deg;)</label>
+              <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter temperature...">
+            </div>
+
+            <div class="mb-4 sm:mb-8">
+              <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Picture</label>
+              <input type="file" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="...">
+            </div>
+        </div>
+       
         
-        <!-- File Uploading Progress Form -->
+        @* <!-- File Uploading Progress Form -->
         <div class="mb-4 sm:mb-8">
           <!-- Uploading File Content -->
           <div class="mb-2 flex justify-between items-center">
@@ -115,7 +137,7 @@
           </div>
           <!-- End Progress Bar -->
         </div>
-        <!-- End File Uploading Progress Form -->
+        <!-- End File Uploading Progress Form --> *@
 
         <div>
           <label for="hs-feedback-post-comment-textarea-1" class="block mb-2 text-sm font-medium dark:text-white">Comment</label>

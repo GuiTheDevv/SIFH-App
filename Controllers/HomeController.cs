@@ -1,30 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Sifh.ReportGenerator.Model;
+using SIFHApp.Models;
 
-namespace SIFH_Application.Controllers;
-
-[ApiController]
-[Route("[controller]")]
+namespace SIFHApp.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly SifhmisContext _context;
 
-    private readonly SifhContext misDbContext;
-
-    public HomeController(SifhContext dbContext)
+    public HomeController(SifhmisContext db)
     {
-        this.misDbContext = dbContext;
-    }
-    [HttpGet("GetAllVessels")]
-    public IEnumerable<Vessel> GetVessels(){
-        IEnumerable<Vessel> vessels = this.misDbContext.Vessels.ToList();
-        return vessels;
+        _context = db;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var data = new DataView
+        {
+            Vessels = await _context.Vessels.ToListAsync(),
+            Products = await _context.Products.ToListAsync()
+        };
+        return View(data);
     }
-    
 }

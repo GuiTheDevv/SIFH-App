@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using Sifh.ReportGenerator.Model;
+using SIFHApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<SifhContext>(
-    options=>{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Defualt"));
-});
+builder.Services.AddDbContext<SifhmisContext>(
+    options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SifhMisDB"))
+);
 
 var app = builder.Build();
 
@@ -20,7 +20,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
