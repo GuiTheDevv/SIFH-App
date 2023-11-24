@@ -26,22 +26,11 @@
         </div>
 
         <div class="mb-4 sm:mb-8">
-            <button id="dropdownVesselButton" data-dropdown-toggle="dropdownVessel" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 w-fit" type="button">Vessel
-                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Dropdown menu -->
-        <div id="dropdownVessel" class="mb-4 sm:mb-8 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                @foreach(var vessel in Model.Vessels){
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">@vessel.VesselName</a>
-                    </li>
-                }
-            </ul>
+            <select class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
+              @foreach(var vessel in Model.Vessels){
+                <option>@vessel.VesselName</option>
+              }
+            </select>
         </div>
 
         <div class="mb-4 sm:mb-8 ">
@@ -51,22 +40,13 @@
         </div>
 
         <div class="flex flex-col mb-4 sm:mb-8 text-sm">
-            <button id="dropdownProductButton" data-dropdown-toggle="dropdownProduct" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 justify-between" type="button">
-                <p>Product</p>
-                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                </svg>
-            </button>
-            <!-- Dropdown menu -->
-            <div id="dropdownProduct" class="mb-4 sm:mb-8 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                    @foreach(var product in Model.Products){
-                        <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">@product.ProductName</a>
-                        </li>
-                    }
-                </ul>
-            </div>
+            <div class="mb-4 sm:mb-8">
+            <select class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
+              @foreach(var product in Model.Products){
+                <option>@product.ProductName</option>
+              }
+            </select>
+        </div>
 
             <div class="mb-4 sm:mb-8">
               <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Weight (lbs)</label>
@@ -83,10 +63,21 @@
               <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter temperature...">
             </div>
 
-            <div class="mb-4 sm:mb-8">
-              <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Picture</label>
-              <input type="file" id="hs-feedback-post-comment-name-1" accept="image/*;capture=camera" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="...">
-            </div>
+          <div class="mb-4 sm:mb-8">
+            <label for="hs-feedback-post-comment-name-1" class="block h-auto mb-2 text-sm font-medium dark:text-white">Picture</label>
+            <div class="flex items-center justify-center w-full py-7">
+                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                        </svg>
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                    </div>
+                    <input id="dropzone-file" type="file" accept="image/*;capture=camera" class="hidden" />
+                </label>
+            </div> 
+          </div>
         </div>
 
         <div class="mb-4 sm:mb-8">
@@ -99,30 +90,6 @@
         <div class="mb-4 sm:mb-8">
           <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Add</button>
         </div>
-
-        <div class="mb-4 sm:mb-8 text-white">
-          <table class="border-collapse w-full">
-            <thead>
-              <tr class="bg-gray-200 text-gray-800">
-                <th class="border border-gray-800 px-4 py-2">UNIT OF GOODS</th>
-                <th class="border border-gray-800 px-4 py-2">FISH TYPE</th>
-                <th class="border border-gray-800 px-4 py-2">GRADE</th>
-                <th class="border border-gray-800 px-4 py-2">TEMPERATURE</th>
-                <th class="border border-gray-800 px-4 py-2">UNIT PRICE</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="bg-gray-800">
-                <td class="border border-gray-600 px-4 py-2 text-center">105</td>
-                <td class="border border-gray-600 px-4 py-2 text-center">Tuna YF</td>
-                <td class="border border-gray-600 px-4 py-2 text-center">1</td>
-                <td class="border border-gray-600 px-4 py-2 text-center">36&deg;F</td>
-                <td class="border border-gray-600 px-4 py-2 text-center">lbs</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
         <div class="mt-6 grid">
           <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Save</button>
         </div>
