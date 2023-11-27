@@ -1,26 +1,30 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SIFHApp.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace SIFHApp.Controllers;
-
-public class HomeController : Controller
+namespace SIFHApp.Controllers
 {
-    private readonly SifhmisContext _context;
-
-    public HomeController(SifhmisContext db)
+    public class HomeController : Controller
     {
-        _context = db;
-    }
+        private readonly SifhmisContext _context;
 
-    public async Task<IActionResult> Index()
-    {
-        var data = new DataView
+        public HomeController(SifhmisContext db)
         {
-            Vessels = await _context.Vessels.ToListAsync(),
-            Products = await _context.Products.ToListAsync()
-        };
-        return View(data);
+            _context = db;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var data = new DataView
+            {
+                Vessels = await _context.Vessels.ToListAsync(),
+                Products = await _context.Products.ToListAsync(),
+                GradeClasses = await _context.GradeClasses.ToListAsync()
+            };
+            return View(data);
+        }
     }
 }
