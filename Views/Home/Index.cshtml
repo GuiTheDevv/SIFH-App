@@ -1,4 +1,4 @@
-﻿@model DataView
+﻿@model FormDataViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,15 +19,15 @@
 
     <!-- Card -->
     <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
-      <form>
+      <form asp-controller="Home" asp-action="SubmitForm" method="post">
         <div class="mb-4 sm:mb-8">
           <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Reference Number</label>
-          <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter reference number...">
+          <input type="text" id="hs-feedback-post-comment-name-1" name="referenceNumber" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter reference number...">
         </div>
 
         <div class="mb-4 sm:mb-8">
             <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Vessel</label>
-            <select class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
+            <select name="vesselID" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
               @foreach(var vessel in Model.Vessels){
                 <option value=@vessel.VesselId>@vessel.VesselName</option>
               }
@@ -43,7 +43,7 @@
         <div class="flex flex-col mb-4 sm:mb-8 text-sm">
             <div class="mb-4 sm:mb-8">
               <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Catch Type</label>
-              <select class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
+              <select name="catchID" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
                 @foreach(var product in Model.Products){
                   <option value=@product.ProductId>@product.ProductName</option>
                 }
@@ -52,12 +52,12 @@
 
             <div class="mb-4 sm:mb-8">
               <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Weight (lbs)</label>
-              <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter weight...">
+              <input type="text" name="weight" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter weight...">
             </div>
 
             <div class="mb-4 sm:mb-8">
               <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Grade Class</label>
-              <select class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
+              <select name="gradeID" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
                 @foreach(var grades in Model.GradeClasses){
                   <option value=@grades.GradeClassId>@grades.GradeClassName</option>
                 }
@@ -65,7 +65,7 @@
 
             <div class="mb-4 sm:mb-8">
               <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium dark:text-white">Temperature (F&deg;)</label>
-              <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter temperature...">
+              <input type="text" name="temperature" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter temperature...">
             </div>
 
           <div class="mb-4 sm:mb-8">
@@ -111,29 +111,31 @@
                   </tr>
               </thead>
               <tbody>
+                @foreach (var displayData in Model.SubmittedDataList){
                   <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th scope="row" class="px-6 py-4 text-center">
-                          105
-                      </th>
-                      <td class="px-6 py-4 text-center">
-                          Tuna YF
-                      </td>
-                      <td class="px-6 py-4 text-center">
-                          1+
-                      </td>
-                      <td class="px-6 py-4 text-center">
-                          36 &deg;F
-                      </td>
-                      <td class="px-6 py-4 text-center">
-                          lbs
-                      </td>
+                    <th scope="row" class="px-6 py-4 text-center">
+                        @displayData.weight
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        @displayData.catchName
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        @displayData.grade
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        @displayData.temperature &deg;F
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        lbs
+                    </td>
                   </tr>
+                }
               </tbody>
           </table>
-      </div>
-      <div class="mt-6 grid">
-        <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Save</button>
-      </div>
+        </div>
+        <div class="mt-6 grid">
+          <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Save</button>
+        </div>
     </div>
     <!-- End Card -->
   </div>
