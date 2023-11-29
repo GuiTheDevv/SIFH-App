@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SIFHApp.Controllers
 {
+public class HomeController : Controller
 {
     private List<FormData> formDataList = new List<FormData>(); // Field to hold form data
 
