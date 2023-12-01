@@ -1,3 +1,5 @@
+using System.Reflection.Metadata;
+
 public class FormData {
     public int referenceNumber { get; set; }
     public int vesselID { get; set; }
@@ -7,5 +9,6 @@ public class FormData {
     public int gradeID { get; set; }
     public string? grade { get; set; }
     public decimal temperature { get; set; }
+    // public Blob? image { get; set; }
     
 }
