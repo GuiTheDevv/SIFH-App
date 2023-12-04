@@ -1,14 +1,15 @@
 using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Mvc;
 
 public class FormData {
-    public int referenceNumber { get; set; }
-    public int vesselID { get; set; }
-    public int catchID { get; set;}
-    public string? catchName { get; set; }
-    public decimal weight { get; set; }
-    public int gradeID { get; set; }
-    public string? grade { get; set; }
-    public decimal temperature { get; set; }
-    // public Blob? image { get; set; }
+    public int ReferenceNumber { get; set; }
+    public int VesselID { get; set; }
+    public int CatchID { get; set;}
+    public string? CatchName { get; set; }
+    public decimal Weight { get; set; }
+    public int GradeID { get; set; }
+    public string? Grade { get; set; }
+    public decimal Temperature { get; set; }
+    public byte[]? ImageData { get; set; }
     
 }

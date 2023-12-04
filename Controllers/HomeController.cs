@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SIFHApp.Models;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
+
 
 namespace SIFHApp.Controllers
 {
@@ -34,21 +31,29 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Index(int ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature)
+    public async Task<IActionResult> IndexAsync(int ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
     {
         FormData formData = new FormData {
-            referenceNumber = ReferenceNumber,
-            vesselID = VesselID,
-            catchID = CatchID,
-            weight = Weight,
-            gradeID = GradeID,
-            temperature = Temperature,
-            // image = Image
+            ReferenceNumber = ReferenceNumber,
+            VesselID = VesselID,
+            CatchID = CatchID,
+            Weight = Weight,
+            GradeID = GradeID,
+            Temperature = Temperature
         };
+
+        if(Image != null){
+                using var memoryStream = new MemoryStream();
+                await Image.CopyToAsync(memoryStream);
+                formData.ImageData = memoryStream.ToArray();
+            } else{
+                Console.WriteLine("No image");
+            }
+        
         
         // Fetch related entity data based on the provided IDs
-        formData.catchName = _context.Products.FirstOrDefault(p => p.ProductId == CatchID)?.ProductName ?? "";
-        formData.grade = _context.GradeClasses.FirstOrDefault(g => g.GradeClassId == GradeID)?.GradeClassName ?? "";
+        formData.CatchName = _context.Products.FirstOrDefault(p => p.ProductId == CatchID)?.ProductName ?? "";
+        formData.Grade = _context.GradeClasses.FirstOrDefault(g => g.GradeClassId == GradeID)?.GradeClassName ?? "";
 
         formDataList.Add(formData); // Add the new form data to the existing static list
 
@@ -60,13 +65,13 @@ public class HomeController : Controller
             Products = _context.Products.ToList(),
             GradeClasses = _context.GradeClasses.ToList(),
             SubmittedDataList = formDataList, // Use the static formDataList here
-            LastReferenceNumber = lastFormData?.referenceNumber, // Display last reference number
-            LastVesselID = lastFormData?.vesselID // Pre-select vessel as the last item in the table
+            LastReferenceNumber = lastFormData?.ReferenceNumber, // Display last reference number
+            LastVesselID = lastFormData?.VesselID // Pre-select vessel as the last item in the table
         };
 
         Console.WriteLine("form submitted");
         foreach(var item in viewModel.SubmittedDataList){
-            Console.WriteLine($"ReferenceNumber: {item.referenceNumber}, VesselID: {item.vesselID} ..."); // Add all properties here
+            Console.WriteLine($"ReferenceNumber: {item.ReferenceNumber}, file: {item.ImageData} ..."); // Add all properties here
         }
 
         return View("Index", viewModel);

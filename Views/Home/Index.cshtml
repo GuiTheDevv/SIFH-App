@@ -19,7 +19,7 @@
 
     <!-- Card -->
     <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
-      <form action="" method="post">
+      <form action="" method="post" enctype="multipart/form-data">
         <div class="mb-4 sm:mb-8">
           <label for="refNumberInput" class="block mb-2 text-sm font-medium dark:text-white">Reference Number</label>
           @if (Model.LastReferenceNumber != null)
@@ -83,54 +83,59 @@
             </div>
 
           <div class="mb-4 sm:mb-8">
-    <label for="dropzone-file" class="block h-auto mb-2 text-sm font-medium dark:text-white">Picture</label>
-    <div class="flex items-center justify-center w-full py-7">
-        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <div class="w-full h-full flex-col items-center justify-center text-center" id="previewContainer">
-                <!-- Placeholder icon or image -->
-                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                </svg>
-                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-            </div>
-            <input id="dropzone-file" type="file" name="image" accept="image/*;capture=camera" class="hidden" onchange="previewImage(event)" />
-        </label>
-    </div>
-</div>
+              <label for="dropzone-file" class="block h-auto mb-2 text-sm font-medium dark:text-white">Picture</label>
+              <div class="flex-col items-center justify-center w-full h-full">
+                  <label for="dropzone-file" class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                      <div class="w-full h-full overflow-hidden" id="previewContainer">
+                          <!-- Placeholder icon or image -->
+                          <svg class="w-8 h-8 mb-4 mt-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                          </svg>
+                          <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                          <p class="text-xs text-gray-500 dark:text-gray-400 mb-7">SVG, PNG, JPG or GIF</p>
+                          <img id="imagePreview" src="#" alt="Preview" class="hidden" />
+                      </div>
+                      <input id="dropzone-file" type="file" name="image" accept="image/*;capture=camera" class="hidden" onchange="previewImage(event)" />
+                  </label>
+              </div>
+          </div>
+          
+          <style>
+              #previewContainer {
+                  max-width: 100%;
+                  max-height: 100%;
+                  display: grid;
+                  place-items: center;
+                  align-items: center;
+                  justify-content: center;
+                  text-align: center;
+              }
+          
+              #imagePreview {
+                  max-width: 100%;
+                  max-height: 100%;
+                  object-fit: contain;
+              }
+          </style>
 
-<style>
-    #previewContainer {
-        max-width: 100%;
-        max-height: 100%;
-        overflow: hidden;
-    }
+          <script>
+              function previewImage(event) {
+                  const previewContainer = document.getElementById('previewContainer');
+                  const file = event.target.files[0];
+                  const reader = new FileReader();
 
-    #previewContainer img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-    }
-</style>
+                  reader.onloadend = function () {
+                      const img = new Image();
+                      img.src = reader.result;
+                      previewContainer.innerHTML = '';
+                      previewContainer.appendChild(img);
+                  };
 
-<script>
-    function previewImage(event) {
-        const previewContainer = document.getElementById('previewContainer');
-        const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onloadend = function () {
-            const img = new Image();
-            img.src = reader.result;
-            previewContainer.innerHTML = '';
-            previewContainer.appendChild(img);
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    }
-</script>
+                  if (file) {
+                      reader.readAsDataURL(file);
+                  }
+              }
+          </script>
 
         </div>
 
@@ -155,7 +160,7 @@
                           TEMPERATURE
                       </th>
                       <th scope="col" class="px-6 py-3">
-                          UNIT PRICE
+                          PICTURE
                       </th>
                   </tr>
               </thead>
@@ -163,20 +168,27 @@
                 @foreach (var displayData in Model.SubmittedDataList){
                   <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th scope="row" class="px-6 py-4 text-center">
-                        @displayData.weight
+                        @displayData.Weight
                     </th>
                     <td class="px-6 py-4 text-center">
-                        @displayData.catchName
+                        @displayData.CatchName
                     </td>
                     <td class="px-6 py-4 text-center">
-                        @displayData.grade
+                        @displayData.Grade
                     </td>
                     <td class="px-6 py-4 text-center">
-                        @displayData.temperature &deg;F
+                        @displayData.Temperature &deg;F
                     </td>
-                    <td class="px-6 py-4 text-center">
-                        lbs
-                    </td>
+                    @if(displayData.ImageData == null){
+                      <td class="px-6 py-4 text-center">
+                        No
+                      </td>
+                    }
+                    @if(displayData.ImageData != null){
+                      <td class="px-6 py-4 text-center">
+                        Yes
+                      </td>
+                    }
                   </tr>
                 }
               </tbody>
