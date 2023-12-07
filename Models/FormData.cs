@@ -2,7 +2,7 @@ using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Mvc;
 
 public class FormData {
-    public int ReferenceNumber { get; set; }
+    public string? ReferenceNumber { get; set; }
     public int VesselID { get; set; }
     public int CatchID { get; set;}
     public string? CatchName { get; set; }

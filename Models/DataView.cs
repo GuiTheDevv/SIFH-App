@@ -25,7 +25,7 @@ public class FormDataViewModel
     public List<Product> Products { get; set; }
     public List<GradeClass> GradeClasses { get; set; }
     public List<FormData> SubmittedDataList { get; set; }
-    public int? LastReferenceNumber { get; set; }
+    public string? LastReferenceNumber { get; set; }
     public int? LastVesselID { get; set; }
 
     // Constructor to initialize lists

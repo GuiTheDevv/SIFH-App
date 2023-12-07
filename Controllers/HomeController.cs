@@ -31,7 +31,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> IndexAsync(int ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
+    public async Task<IActionResult> IndexAsync(string ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
     {
         FormData formData = new FormData {
             ReferenceNumber = ReferenceNumber,
@@ -76,8 +76,50 @@ public class HomeController : Controller
 
         return View("Index", viewModel);
     }
-}
+
+        [HttpPost]
+        public IActionResult InsertFormDataListToDatabase()
+        {
+            string temp = "";
+            try
+            {
+                foreach (var item in formDataList)
+                {
+                    if (item.ReferenceNumber != temp)
+                    {
+                        ReceivingNote rn = new ReceivingNote
+                        {
+                            ReferenceNumber = item.ReferenceNumber,
+                            VesselId = item.VesselID
+                        };
+                        
+                    }
 
 
 
+                    formDataList.Clear();
+
+                    // var viewModel = new FormDataViewModel
+                    // {
+                    //     Vessels = _context.Vessels.ToList(),
+                    //     Products = _context.Products.ToList(),
+                    //     GradeClasses = _context.GradeClasses.ToList(),
+                    //     SubmittedDataList = formDataList, // Use the static formDataList here
+                    //     LastReferenceNumber = null, // Display last reference number
+                    //     LastVesselID = null // Pre-select vessel as the last item in the table
+                    // };
+
+                    Console.WriteLine("Data Saved");
+
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+
+            return Ok();
+        }
+    }
 }
