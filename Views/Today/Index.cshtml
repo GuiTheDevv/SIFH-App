@@ -1,4 +1,4 @@
-@model FormDataViewModel
+@model TodayDataView
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,147 +10,37 @@
     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
 </head>
 <body class="dark:bg-slate-900">
-<nav class="flex bg-gray-800 dark:bg-gray-900 w-16 sm:w-24 md:w-32 lg:w-40 h-full justify-start items-end">
-    <a href="/Today" class="text-white py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-800 flex items-center">
+<nav class="flex bg-gray-800 dark:bg-gray-900 w-full h-full justify-end">
+  <div class="flex mx-auto">
+    <a href="/Custom" class="text-white py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-800 flex items-center">
         <!-- Example icon or text -->
-        Today
+        By Date
     </a>
+    <a href="/" class="text-white py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-800 flex items-center">
+        <!-- Example icon or text -->
+        Home
+    </a>
+  </div>
 </nav>
     <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
     <div class="mx-auto max-w-2xl">
     <div class="text-center">
       <h2 class="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
-        Receiving Note
+        Today
       </h2>
     </div>
 
     <!-- Card -->
     <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
-      <form action="" method="post" enctype="multipart/form-data">
-        <div class="mb-4 sm:mb-8">
-          <label for="refNumberInput" class="block mb-2 text-sm font-medium dark:text-white">Reference Number</label>
-          <input type="text" id="refNumberInput" name="referenceNumber"
-          value="@(Model.LastReferenceNumber ?? string.Empty)"
-          class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600"
-          placeholder="Enter reference number...">
-        </div>
-
-        <div class="mb-4 sm:mb-8">
-            <label for="vesselInput" class="block mb-2 text-sm font-medium dark:text-white">Vessel</label>
-            <select name="vesselID" id="vesselInput" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
-              @foreach(var vessel in Model.Vessels){
-                @if(vessel.VesselId == Model.LastVesselID){
-                  <option value=@vessel.VesselId selected>@vessel.VesselName</option>
-                }
-                if(vessel.VesselId != Model.LastVesselID){
-                  <option value=@vessel.VesselId>@vessel.VesselName</option>
-                }
-                }
-              }
-            </select>
-        </div>
-
-        <div class="mb-4 sm:mb-8 ">
-          <h2 class="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
-            Items
-          </h2>
-        </div>
-
-        <div class="flex flex-col mb-4 sm:mb-8 text-sm">
-            <div class="mb-4 sm:mb-8">
-              <label for="productInput" class="block mb-2 text-sm font-medium dark:text-white">Catch Type</label>
-              <select name="catchID" id="productInput" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
-                @foreach(var product in Model.Products){
-                  <option value=@product.ProductId>@product.ProductName</option>
-                }
-              </select>
-            </div>
-
-            <div class="mb-4 sm:mb-8">
-              <label for="weightInput" class="block mb-2 text-sm font-medium dark:text-white">Weight (lbs)</label>
-              <input type="text" name="weight" id="weightInput" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter weight...">
-            </div>
-
-            <div class="mb-4 sm:mb-8">
-              <label for="gradeInput" class="block mb-2 text-sm font-medium dark:text-white">Grade Class</label>
-              <select name="gradeID" id="gradeInput" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
-                @foreach(var grades in Model.GradeClasses){
-                  <option value=@grades.GradeClassId>@grades.GradeClassName</option>
-                }
-              </select></div>
-
-            <div class="mb-4 sm:mb-8">
-              <label for="temperatureInput" class="block mb-2 text-sm font-medium dark:text-white">Temperature (F&deg;)</label>
-              <input type="text" name="temperature" id="temperatureInput" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600" placeholder="Enter temperature...">
-            </div>
-
-          <div class="mb-4 sm:mb-8">
-              <label for="dropzone-file" class="block h-auto mb-2 text-sm font-medium dark:text-white">Picture</label>
-              <div class="flex-col items-center justify-center w-full h-full">
-                  <label for="dropzone-file" class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                      <div class="w-full h-full overflow-hidden" id="previewContainer">
-                          <!-- Placeholder icon or image -->
-                          <svg class="w-8 h-8 mb-4 mt-7 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                          </svg>
-                          <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
-                          <p class="text-xs text-gray-500 dark:text-gray-400 mb-7">SVG, PNG, JPG or GIF</p>
-                          <img id="imagePreview" src="#" alt="Preview" class="hidden" />
-                      </div>
-                      <input id="dropzone-file" type="file" name="image" accept="image/*;capture=camera" class="hidden" onchange="previewImage(event)" />
-                  </label>
-              </div>
-          </div>
-          
-          <style>
-              #previewContainer {
-                  max-width: 100%;
-                  max-height: 100%;
-                  display: grid;
-                  place-items: center;
-                  align-items: center;
-                  justify-content: center;
-                  text-align: center;
-              }
-          
-              #imagePreview {
-                  max-width: 100%;
-                  max-height: 100%;
-                  object-fit: contain;
-              }
-          </style>
-
-          <script>
-              function previewImage(event) {
-                  const previewContainer = document.getElementById('previewContainer');
-                  const file = event.target.files[0];
-                  const reader = new FileReader();
-
-                  reader.onloadend = function () {
-                      const img = new Image();
-                      img.src = reader.result;
-                      previewContainer.innerHTML = '';
-                      previewContainer.appendChild(img);
-                  };
-
-                  if (file) {
-                      reader.readAsDataURL(file);
-                  }
-              }
-          </script>
-
-        </div>
-
-        <div class="mb-4 sm:mb-8">
-          <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Add</button>
-        </div>   
-      </form>
-        <div class="relative overflow-x-auto">
+      <div class="relative overflow-x-auto">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                       <th scope="col" class="px-6 py-3">
-                          UNIT OF GOOD
+                          REF NUMBER
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          RN ITEM ID
                       </th>
                       <th scope="col" class="px-6 py-3">
                           CATCH TYPE
@@ -162,44 +52,52 @@
                           TEMPERATURE
                       </th>
                       <th scope="col" class="px-6 py-3">
-                          PICTURE
+                          WEIGHT
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          IMG
                       </th>
                   </tr>
               </thead>
               <tbody>
-                @foreach (var displayData in Model.SubmittedDataList){
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 text-center">
-                        @displayData.Weight
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        @displayData.CatchName
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        @displayData.Grade
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        @displayData.Temperature &deg;F
-                    </td>
-                    @if(displayData.ImageData == null){
-                      <td class="px-6 py-4 text-center">
-                        No
-                      </td>
+                @foreach (var rn in Model.receivingNotes){
+                  @foreach (var item in Model.receivingNoteItems){
+                    @if (item.ReceivingNoteId == rn.ReceivingNoteId){
+                      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 text-center">
+                            @rn.ReferenceNumber
+                        </th>
+                        <td class="px-6 py-4 text-center">
+                            @item.ReceivingNoteItemId
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            @item.Product.ProductName
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            @item.GradeClass.GradeClassName
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            @item.Temperature &deg;F
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            @item.Quantity
+                        </td>
+                        @if(item.Image == null){
+                          <td class="px-6 py-4 text-center">
+                            No
+                          </td>
+                        }
+                        @if(item.Image != null){
+                          <td class="px-6 py-4 text-center">
+                            Yes
+                          </td>
+                        }
+                      </tr>
                     }
-                    @if(displayData.ImageData != null){
-                      <td class="px-6 py-4 text-center">
-                        Yes
-                      </td>
-                    }
-                  </tr>
+                  }
                 }
               </tbody>
           </table>
-        </div>
-        <div class="mt-6 grid">
-          <form method="post" action="/Home/InsertFormDataListToDatabase">
-            <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Save</button>
-          </form>  
         </div>
     </div>
     <!-- End Card -->

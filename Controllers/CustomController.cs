@@ -17,64 +17,37 @@ public class CustomController : Controller
 
     public IActionResult Index()
     {
-        var viewModel = new FormDataViewModel
-        {
-            Vessels = _context.Vessels.ToList(),
-            Products = _context.Products.ToList(),
-            GradeClasses = _context.GradeClasses.ToList(),
-            SubmittedDataList = formDataList
-        };
-
         Console.WriteLine("controller working");
 
-        return View(viewModel);
+        return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> IndexAsync(string ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
+    public async Task<IActionResult> IndexAsync(DateTime datePicker)
     {
-        FormData formData = new FormData {
-            ReferenceNumber = ReferenceNumber,
-            VesselID = VesselID,
-            CatchID = CatchID,
-            Weight = Weight,
-            GradeID = GradeID,
-            Temperature = Temperature
-        };
 
-        if(Image != null){
-                using var memoryStream = new MemoryStream();
-                await Image.CopyToAsync(memoryStream);
-                formData.ImageData = memoryStream.ToArray();
-            } else{
-                Console.WriteLine("No image");
+        var date = datePicker.Date;
+
+        List<ReceivingNote>receivingNotes = new List<ReceivingNote>();
+        List<ReceivingNoteItem>receivingNoteItems = new List<ReceivingNoteItem>();
+
+        receivingNotes = _context.ReceivingNotes.Where(x => x.DateCreated.Date == date).ToList();
+
+        foreach(var rn in receivingNotes){
+            var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
+            foreach(var item in items){
+                item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
+                item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
             }
-        
-        
-        // Fetch related entity data based on the provided IDs
-        formData.CatchName = _context.Products.FirstOrDefault(p => p.ProductId == CatchID)?.ProductName ?? "";
-        formData.Grade = _context.GradeClasses.FirstOrDefault(g => g.GradeClassId == GradeID)?.GradeClassName ?? "";
-
-        formDataList.Add(formData); // Add the new form data to the existing static list
-
-         var lastFormData = formDataList.LastOrDefault();
-
-        var viewModel = new FormDataViewModel
-        {
-            Vessels = _context.Vessels.ToList(),
-            Products = _context.Products.ToList(),
-            GradeClasses = _context.GradeClasses.ToList(),
-            SubmittedDataList = formDataList, // Use the static formDataList here
-            LastReferenceNumber = lastFormData?.ReferenceNumber, // Display last reference number
-            LastVesselID = lastFormData?.VesselID // Pre-select vessel as the last item in the table
-        };
-
-        Console.WriteLine("form submitted");
-        foreach(var item in viewModel.SubmittedDataList){
-            Console.WriteLine($"ReferenceNumber: {item.ReferenceNumber}, file: {item.ImageData} ..."); // Add all properties here
+            receivingNoteItems.AddRange(items);
         }
 
-        return View("Index", viewModel);
+        var todayDataView = new TodayDataView {
+            receivingNoteItems = receivingNoteItems,
+            receivingNotes = receivingNotes
+        };
+
+        return View("Index", todayDataView);
     }
 
         [HttpPost]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 namespace SIFHApp.Models;
 
@@ -28,6 +29,8 @@ public partial class ReceivingNoteItem
     public string? SpeciesCode { get; set; }
 
     public int? PackingListNumber { get; set; }
+
+    public byte[]? Image { get; set; }
 
     public virtual GradeClass GradeClass { get; set; } = null!;
 

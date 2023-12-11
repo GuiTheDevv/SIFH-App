@@ -17,109 +17,30 @@ public class TodayController : Controller
 
     public IActionResult Index()
     {
-        var viewModel = new FormDataViewModel
-        {
-            Vessels = _context.Vessels.ToList(),
-            Products = _context.Products.ToList(),
-            GradeClasses = _context.GradeClasses.ToList(),
-            SubmittedDataList = formDataList
+        var date = DateTime.Now.Date;
+
+        List<ReceivingNote>receivingNotes = new List<ReceivingNote>();
+        List<ReceivingNoteItem>receivingNoteItems = new List<ReceivingNoteItem>();
+
+        receivingNotes = _context.ReceivingNotes.Where(x => x.DateCreated.Date == date).ToList();
+
+        foreach(var rn in receivingNotes){
+            var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
+            foreach(var item in items){
+                item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
+                item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
+            }
+            receivingNoteItems.AddRange(items);
+        }
+
+        var todayDataView = new TodayDataView {
+            receivingNoteItems = receivingNoteItems,
+            receivingNotes = receivingNotes
         };
 
         Console.WriteLine("controller working");
 
-        return View(viewModel);
+        return View(todayDataView);
     }
-
-    [HttpPost]
-    public async Task<IActionResult> IndexAsync(string ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
-    {
-        FormData formData = new FormData {
-            ReferenceNumber = ReferenceNumber,
-            VesselID = VesselID,
-            CatchID = CatchID,
-            Weight = Weight,
-            GradeID = GradeID,
-            Temperature = Temperature
-        };
-
-        if(Image != null){
-                using var memoryStream = new MemoryStream();
-                await Image.CopyToAsync(memoryStream);
-                formData.ImageData = memoryStream.ToArray();
-            } else{
-                Console.WriteLine("No image");
-            }
-        
-        
-        // Fetch related entity data based on the provided IDs
-        formData.CatchName = _context.Products.FirstOrDefault(p => p.ProductId == CatchID)?.ProductName ?? "";
-        formData.Grade = _context.GradeClasses.FirstOrDefault(g => g.GradeClassId == GradeID)?.GradeClassName ?? "";
-
-        formDataList.Add(formData); // Add the new form data to the existing static list
-
-         var lastFormData = formDataList.LastOrDefault();
-
-        var viewModel = new FormDataViewModel
-        {
-            Vessels = _context.Vessels.ToList(),
-            Products = _context.Products.ToList(),
-            GradeClasses = _context.GradeClasses.ToList(),
-            SubmittedDataList = formDataList, // Use the static formDataList here
-            LastReferenceNumber = lastFormData?.ReferenceNumber, // Display last reference number
-            LastVesselID = lastFormData?.VesselID // Pre-select vessel as the last item in the table
-        };
-
-        Console.WriteLine("form submitted");
-        foreach(var item in viewModel.SubmittedDataList){
-            Console.WriteLine($"ReferenceNumber: {item.ReferenceNumber}, file: {item.ImageData} ..."); // Add all properties here
-        }
-
-        return View("Index", viewModel);
-    }
-
-        [HttpPost]
-        public IActionResult InsertFormDataListToDatabase()
-        {
-            string temp = "";
-            try
-            {
-                foreach (var item in formDataList)
-                {
-                    if (item.ReferenceNumber != temp)
-                    {
-                        ReceivingNote rn = new ReceivingNote
-                        {
-                            ReferenceNumber = item.ReferenceNumber,
-                            VesselId = item.VesselID
-                        };
-                        
-                    }
-
-
-
-                    formDataList.Clear();
-
-                    // var viewModel = new FormDataViewModel
-                    // {
-                    //     Vessels = _context.Vessels.ToList(),
-                    //     Products = _context.Products.ToList(),
-                    //     GradeClasses = _context.GradeClasses.ToList(),
-                    //     SubmittedDataList = formDataList, // Use the static formDataList here
-                    //     LastReferenceNumber = null, // Display last reference number
-                    //     LastVesselID = null // Pre-select vessel as the last item in the table
-                    // };
-
-                    Console.WriteLine("Data Saved");
-
-                    return RedirectToAction("Index");
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error: {ex.Message}");
-            }
-
-            return Ok();
-        }
     }
 }
