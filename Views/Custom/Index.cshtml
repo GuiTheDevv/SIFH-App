@@ -36,8 +36,7 @@
         <div class="mb-4 sm:mb-8 relative">
             <label for="datePicker" class="block mb-2 text-sm font-medium dark:text-white">Date Picker</label>
             <input type="date" id="datePicker" name="datePicker" value="@DateTime.Now"
-                   class="py-3 px-4 block w-full border-white border-2 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600 appearance-none"
-                   style="color: white;"
+                   class="py-3 px-4 block w-full border-white border-2 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 dark:bg-white dark:border-gray-700 dark:text-slate-900 dark:focus:ring-gray-600 appearance-none"
             >
         </div>
 
@@ -85,10 +84,12 @@
                             @item.ReceivingNoteItemId
                         </td>
                         <td class="px-6 py-4 text-center">
-                            @item.Product.ProductName
+                            @* @item.Product.ProductName  *@
+                            test
                         </td>
                         <td class="px-6 py-4 text-center">
-                            @item.GradeClass.GradeClassName
+                            @* @item.GradeClass.GradeClassName *@
+                            test
                         </td>
                         <td class="px-6 py-4 text-center">
                             @item.Temperature &deg;F
