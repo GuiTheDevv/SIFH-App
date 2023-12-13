@@ -22,7 +22,7 @@ public class CustomController : Controller
             receivingNoteItems = rnItems,
             receivingNotes = rn
         };
-        Console.WriteLine("controller working");
+        Console.WriteLine("custom controller working");
 
         return View(todayDataView);
     }
@@ -30,32 +30,67 @@ public class CustomController : Controller
         [HttpPost]
         public IActionResult Index(DateTime datePicker)
         {
+            if(datePicker == default){
+               Console.WriteLine("invalid date");
+            }
+             var date = datePicker.Date;
 
-            var date = datePicker.Date;
+                List<ReceivingNote> receivingNotes = new List<ReceivingNote>();
 
-            List<ReceivingNote> receivingNotes = new List<ReceivingNote>();
+                receivingNotes = _context.ReceivingNotes.Where(x => x.DateCreated.Date == date).ToList();
+
+                // foreach (var rn in receivingNotes)
+                // {
+                //     var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
+                //     // foreach (var item in items)
+                //     // {
+                //     //     item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
+                //     //     item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
+                //     // }
+                //     receivingNoteItems.AddRange(items);
+                // }
+
+                rnItems.Clear();
+
+                var todayDataView = new TodayDataView
+                {
+                    receivingNotes = receivingNotes,
+                    receivingNoteItems = rnItems
+                };
+
+                rn = receivingNotes;
+
+                return View("Index", todayDataView);
+        }
+
+        [HttpPost]
+        public IActionResult Items(int receivingNoteId)
+        {
+            Console.WriteLine(receivingNoteId);
             List<ReceivingNoteItem> receivingNoteItems = new List<ReceivingNoteItem>();
 
-            receivingNotes = _context.ReceivingNotes.Where(x => x.DateCreated.Date == date).ToList();
+            receivingNoteItems = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == receivingNoteId).ToList();
 
-            foreach (var rn in receivingNotes)
-            {
-                var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
-                // foreach (var item in items)
-                // {
-                //     item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
-                //     item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
-                // }
-                receivingNoteItems.AddRange(items);
-            }
+            // foreach (var rn in receivingNotes)
+            // {
+            //     var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
+            //     // foreach (var item in items)
+            //     // {
+            //     //     item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
+            //     //     item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
+            //     // }
+            //     receivingNoteItems.AddRange(items);
+            // }
 
-            var todayDataView = new TodayDataView
+            var dataView = new TodayDataView
             {
-                receivingNoteItems = receivingNoteItems,
-                receivingNotes = receivingNotes
+                receivingNotes = rn,
+                receivingNoteItems = receivingNoteItems
             };
 
-            return View("Index", todayDataView);
+            rnItems = receivingNoteItems;
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -12,13 +12,13 @@
 <body class="dark:bg-slate-900">
 <nav class="flex bg-gray-800 dark:bg-gray-900 w-full h-full justify-end">
   <div class="flex mx-auto">
+    <a href="/" class="text-white py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-800 flex items-center">
+      <!-- Example icon or text -->
+      Home
+    </a>
     <a href="/Custom" class="text-white py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-800 flex items-center">
         <!-- Example icon or text -->
         By Date
-    </a>
-    <a href="/" class="text-white py-3 px-4 hover:bg-gray-700 dark:hover:bg-gray-800 flex items-center">
-        <!-- Example icon or text -->
-        Home
     </a>
   </div>
 </nav>
@@ -26,13 +26,22 @@
     <div class="mx-auto max-w-2xl">
     <div class="text-center">
       <h2 class="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
-        Today
+        Today's Receiving Note
       </h2>
     </div>
 
     <!-- Card -->
     <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
-      <div class="relative overflow-x-auto">
+      <h3 class="text-lg text-gray-800 font-bold sm:text-3xl dark:text-white pb-3">
+        Choose Receiving Note:
+      </h3>
+      @foreach (var rn in Model.receivingNotes){
+          <form method="post" action="@Url.Action("Items", "Today")" class="flex pb-4">
+              <input type="hidden" name="receivingNoteId" value="@rn.ReceivingNoteId" />
+              <button type="submit" class="w-fit py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">@rn.ReferenceNumber</button>
+          </form>
+      }
+        <div class="relative overflow-x-auto mb-3">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -60,21 +69,22 @@
                   </tr>
               </thead>
               <tbody>
-                @foreach (var rn in Model.receivingNotes){
-                  @foreach (var item in Model.receivingNoteItems){
-                    @if (item.ReceivingNoteId == rn.ReceivingNoteId){
+                   @foreach (var item in Model.receivingNoteItems){
+                    @if (item.ReceivingNoteId != 0){
                       <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 text-center">
-                            @rn.ReferenceNumber
+                            @item.ReceivingNoteId
                         </th>
                         <td class="px-6 py-4 text-center">
                             @item.ReceivingNoteItemId
                         </td>
                         <td class="px-6 py-4 text-center">
-                            @item.Product.ProductName
+                            @* @item.Product.ProductName  *@
+                            test
                         </td>
                         <td class="px-6 py-4 text-center">
-                            @item.GradeClass.GradeClassName
+                            @* @item.GradeClass.GradeClassName *@
+                            test
                         </td>
                         <td class="px-6 py-4 text-center">
                             @item.Temperature &deg;F
@@ -95,7 +105,6 @@
                       </tr>
                     }
                   }
-                }
               </tbody>
           </table>
         </div>

@@ -6,7 +6,8 @@ namespace SIFHApp.Controllers
 {
 public class TodayController : Controller
 {
-    private static List<FormData> formDataList = new List<FormData>(); // Static field to hold form data
+    private static List<ReceivingNote> rn = new List<ReceivingNote>(); // Static field to hold form data
+    private static List<ReceivingNoteItem> rnItems = new List<ReceivingNoteItem>(); // Static field to hold form data
 
     private readonly SifhmisContext _context;
 
@@ -14,33 +15,65 @@ public class TodayController : Controller
     {
         _context = db;
     }
+        public IActionResult Index()
+        {
+            
+             var date = DateTime.Today;
 
-    public IActionResult Index()
-    {
-        var date = DateTime.Now.Date;
+                List<ReceivingNote> receivingNotes = new List<ReceivingNote>();
 
-        List<ReceivingNote>receivingNotes = new List<ReceivingNote>();
-        List<ReceivingNoteItem>receivingNoteItems = new List<ReceivingNoteItem>();
+                receivingNotes = _context.ReceivingNotes.Where(x => x.DateCreated.Date == date).ToList();
 
-        receivingNotes = _context.ReceivingNotes.Where(x => x.DateCreated.Date == date).ToList();
+                // foreach (var rn in receivingNotes)
+                // {
+                //     var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
+                //     // foreach (var item in items)
+                //     // {
+                //     //     item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
+                //     //     item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
+                //     // }
+                //     receivingNoteItems.AddRange(items);
+                // }
 
-        foreach(var rn in receivingNotes){
-            var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
-            foreach(var item in items){
-                item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
-                item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
-            }
-            receivingNoteItems.AddRange(items);
+                var todayDataView = new TodayDataView
+                {
+                    receivingNotes = receivingNotes,
+                    receivingNoteItems = rnItems
+                };
+
+                rn = receivingNotes;
+
+                return View("Index", todayDataView);
         }
 
-        var todayDataView = new TodayDataView {
-            receivingNoteItems = receivingNoteItems,
-            receivingNotes = receivingNotes
-        };
+        [HttpPost]
+        public IActionResult Items(int receivingNoteId)
+        {
+            Console.WriteLine(receivingNoteId);
+            List<ReceivingNoteItem> receivingNoteItems = new List<ReceivingNoteItem>();
 
-        Console.WriteLine("controller working");
+            receivingNoteItems = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == receivingNoteId).ToList();
 
-        return View(todayDataView);
-    }
+            // foreach (var rn in receivingNotes)
+            // {
+            //     var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
+            //     // foreach (var item in items)
+            //     // {
+            //     //     item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
+            //     //     item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
+            //     // }
+            //     receivingNoteItems.AddRange(items);
+            // }
+
+            var dataView = new TodayDataView
+            {
+                receivingNotes = rn,
+                receivingNoteItems = receivingNoteItems
+            };
+
+            rnItems = receivingNoteItems;
+
+            return RedirectToAction("Index");
+        }
     }
 }
