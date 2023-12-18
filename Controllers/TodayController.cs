@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SIFHApp.Models;
 
 
@@ -52,18 +53,12 @@ public class TodayController : Controller
             Console.WriteLine(receivingNoteId);
             List<ReceivingNoteItem> receivingNoteItems = new List<ReceivingNoteItem>();
 
-            receivingNoteItems = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == receivingNoteId).ToList();
-
-            // foreach (var rn in receivingNotes)
-            // {
-            //     var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
-            //     // foreach (var item in items)
-            //     // {
-            //     //     item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
-            //     //     item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
-            //     // }
-            //     receivingNoteItems.AddRange(items);
-            // }
+            receivingNoteItems = _context.ReceivingNoteItems
+            .Where(x => x.ReceivingNoteId == receivingNoteId)
+            .Include(item => item.Product)
+            .Include(item => item.GradeClass)
+            .ToList();
+            // receivingNoteItems.AddRange(items);
 
             var dataView = new TodayDataView
             {

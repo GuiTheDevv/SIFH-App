@@ -46,12 +46,15 @@
           <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Search</button>
         </div>   
       </form>
-      @foreach (var rn in Model.receivingNotes){
-          <form method="post" action="@Url.Action("Items", "Custom")" class="flex pb-4">
-              <input type="hidden" name="receivingNoteId" value="@rn.ReceivingNoteId" />
-              <button type="submit" class="w-fit py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">@rn.ReferenceNumber</button>
-          </form>
+      @if(Model.receivingNotes != null){
+        @foreach (var rn in Model.receivingNotes){
+            <form method="post" action="@Url.Action("Items", "Custom")" class="flex pb-4">
+                <input type="hidden" name="receivingNoteId" value="@rn.ReceivingNoteId" />
+                <button type="submit" class="w-fit py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">@rn.ReferenceNumber</button>
+            </form>
+        }
       }
+
         <div class="relative overflow-x-auto mb-3">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -80,7 +83,8 @@
                   </tr>
               </thead>
               <tbody>
-                   @foreach (var item in Model.receivingNoteItems){
+                @if(Model.receivingNoteItems != null){
+                  @foreach (var item in Model.receivingNoteItems){
                     @if (item.ReceivingNoteId != 0){
                       <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 text-center">
@@ -90,12 +94,12 @@
                             @item.ReceivingNoteItemId
                         </td>
                         <td class="px-6 py-4 text-center">
-                            @* @item.Product.ProductName  *@
-                            test
+                            @item.Product.ProductName 
+                            
                         </td>
                         <td class="px-6 py-4 text-center">
-                            @* @item.GradeClass.GradeClassName *@
-                            test
+                            @item.GradeClass.GradeClassName
+                            
                         </td>
                         <td class="px-6 py-4 text-center">
                             @item.Temperature &deg;F
@@ -116,6 +120,7 @@
                       </tr>
                     }
                   }
+                }
               </tbody>
           </table>
         </div>

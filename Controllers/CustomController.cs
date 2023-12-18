@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SIFHApp.Models;
 
 
@@ -71,16 +72,12 @@ public class CustomController : Controller
 
             receivingNoteItems = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == receivingNoteId).ToList();
 
-            // foreach (var rn in receivingNotes)
-            // {
-            //     var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
-            //     // foreach (var item in items)
-            //     // {
-            //     //     item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
-            //     //     item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
-            //     // }
-            //     receivingNoteItems.AddRange(items);
-            // }
+
+            receivingNoteItems = _context.ReceivingNoteItems
+            .Where(x => x.ReceivingNoteId == receivingNoteId)
+            .Include(item => item.Product)
+            .Include(item => item.GradeClass)
+            .ToList();
 
             var dataView = new TodayDataView
             {
