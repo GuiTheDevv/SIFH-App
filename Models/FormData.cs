@@ -9,7 +9,7 @@ public class FormData {
     public decimal Weight { get; set; }
     public int GradeID { get; set; }
     public string? Grade { get; set; }
-    public decimal Temperature { get; set; }
+    public decimal? Temperature { get; set; }
     public byte[]? ImageData { get; set; }
     
 }

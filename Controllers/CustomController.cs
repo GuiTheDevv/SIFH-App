@@ -40,17 +40,6 @@ public class CustomController : Controller
 
                 receivingNotes = _context.ReceivingNotes.Where(x => x.DateCreated.Date == date).ToList();
 
-                // foreach (var rn in receivingNotes)
-                // {
-                //     var items = _context.ReceivingNoteItems.Where(x => x.ReceivingNoteId == rn.ReceivingNoteId).ToList();
-                //     // foreach (var item in items)
-                //     // {
-                //     //     item.Product = _context.Products.FirstOrDefault(x => x.ProductId == item.ProductId);
-                //     //     item.GradeClass = _context.GradeClasses.FirstOrDefault(x => x.GradeClassId == item.GradeClassId);
-                //     // }
-                //     receivingNoteItems.AddRange(items);
-                // }
-
                 rnItems.Clear();
 
                 var todayDataView = new TodayDataView

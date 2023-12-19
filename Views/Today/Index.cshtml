@@ -77,7 +77,7 @@
               <tbody>
                 @if(Model.receivingNoteItems != null){
                   @foreach (var item in Model.receivingNoteItems){
-                    @if (item.ReceivingNoteId != 0){
+                    @if (item.ReceivingNoteId > -1){
                       <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 text-center">
                             @item.ReceivingNoteId
@@ -110,7 +110,10 @@
                           </td>
                         }
                         <td class="px-6 py-4 text-center">
-                            <button class="border-2 border-white py-2 px-4 rounded-lg">Edit</button>
+                          <form method="post" action="@Url.Action("Index", "Edit")">
+                            <input type="hidden" name="receivingNoteItemId" value="@item.ReceivingNoteItemId" />
+                            <button  type="submit" class="border-2 border-white py-2 px-4 rounded-lg hover:bg-white hover:text-black">Edit</button>
+                          </form> 
                         </td>
                       </tr>
                     }

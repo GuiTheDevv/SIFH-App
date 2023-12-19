@@ -70,11 +70,6 @@ public class TodayController : Controller
 
             return RedirectToAction("Index");
         }
-
-        [HttpPost]
-        public IActionResult EditItem(ReceivingNoteItem receivingNoteItem){
-            return Ok();
-        }
     }
 
 }
