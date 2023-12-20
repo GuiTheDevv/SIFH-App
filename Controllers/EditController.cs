@@ -7,7 +7,7 @@ namespace SIFHApp.Controllers
 {
 public class EditController : Controller
 {
-    private static List<FormData> formDataList = new List<FormData>(); // Static field to hold form data
+    private static int rniID;
 
     private readonly SifhmisContext _context;
 
@@ -30,7 +30,11 @@ public class EditController : Controller
                 return NotFound(); // Or perform a different action based on your application's logic
             }
 
+            rniID = receivingNoteItem.ReceivingNoteItemId;
+
             ReceivingNote receivingNote = _context.ReceivingNotes.Find(receivingNoteItem.ReceivingNoteId);
+
+            
 
             FormData editData = new FormData
             {
@@ -57,51 +61,50 @@ public class EditController : Controller
             return View(editModel);
         }
 
-    // [HttpPost]
-    // public async Task<IActionResult> IndexAsync(string ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
-    // {
-    //     FormData formData = new FormData {
-    //         ReferenceNumber = ReferenceNumber,
-    //         VesselID = VesselID,
-    //         CatchID = CatchID,
-    //         Weight = Weight,
-    //         GradeID = GradeID,
-    //         Temperature = Temperature
-    //     };
+        [HttpPost]
+        public IActionResult EditItem(string ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
+        {
+            try
+            {
+                Console.WriteLine(rniID);
+            Console.WriteLine(ReferenceNumber);
+            Console.WriteLine( VesselID);
+            Console.WriteLine( CatchID);
+            Console.WriteLine( Weight);
+                // var rnID = _context.ReceivingNoteItems.Find(rniID).ReceivingNoteId;
+                // ReceivingNote rn = _context.ReceivingNotes.Find(rnID);
 
-    //     if(Image != null){
-    //             using var memoryStream = new MemoryStream();
-    //             await Image.CopyToAsync(memoryStream);
-    //             formData.ImageData = memoryStream.ToArray();
-    //         } else{
-    //             Console.WriteLine("No image");
-    //         }
-        
-        
-    //     // Fetch related entity data based on the provided IDs
-    //     formData.CatchName = _context.Products.FirstOrDefault(p => p.ProductId == CatchID)?.ProductName ?? "";
-    //     formData.Grade = _context.GradeClasses.FirstOrDefault(g => g.GradeClassId == GradeID)?.GradeClassName ?? "";
+                // rn.ReferenceNumber = ReferenceNumber;
+                // rn.VesselId = VesselID;
 
-    //     formDataList.Add(formData); // Add the new form data to the existing static list
+                // ReceivingNoteItem rni = _context.ReceivingNoteItems.Find(rniID);
 
-    //      var lastFormData = formDataList.LastOrDefault();
+                // rni.ProductId = CatchID;
+                // rni.Quantity = Weight;
+                // rni.UnitPrice = _context.Products.Find(CatchID).CurrentUnitPrice;
+                // rni.LineTotal = Weight * _context.Products.Find(CatchID).CurrentUnitPrice;
+                // rni.Temperature = Temperature;
+                // rni.GradeClassId = GradeID;
+                // if(Image != null){
+                //     using var memoryStream = new MemoryStream();
+                //     await Image.CopyToAsync(memoryStream);
+                //     rni.Image = memoryStream.ToArray();
+                // } else{
+                //     Console.WriteLine("No image");
+                // }
 
-    //     var viewModel = new FormDataViewModel
-    //     {
-    //         Vessels = _context.Vessels.ToList(),
-    //         Products = _context.Products.ToList(),
-    //         GradeClasses = _context.GradeClasses.ToList(),
-    //         SubmittedDataList = formDataList, // Use the static formDataList here
-    //         LastReferenceNumber = lastFormData?.ReferenceNumber, // Display last reference number
-    //         LastVesselID = lastFormData?.VesselID // Pre-select vessel as the last item in the table
-    //     };
+                // _context.Update(rn);
+                // _context.Update(rni);
+                // _context.SaveChanges();
 
-    //     Console.WriteLine("form submitted");
-    //     foreach(var item in viewModel.SubmittedDataList){
-    //         Console.WriteLine($"ReferenceNumber: {item.ReferenceNumber}, file: {item.ImageData} ..."); // Add all properties here
-    //     }
 
-    //     return View("Index", viewModel);
-    // }
+                return RedirectToAction("Index", "Today");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
     }
 }
