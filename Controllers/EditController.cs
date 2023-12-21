@@ -67,10 +67,10 @@ public class EditController : Controller
             try
             {
                 Console.WriteLine(rniID);
-            Console.WriteLine(ReferenceNumber);
-            Console.WriteLine( VesselID);
-            Console.WriteLine( CatchID);
-            Console.WriteLine( Weight);
+                Console.WriteLine(ReferenceNumber);
+                Console.WriteLine( VesselID);
+                Console.WriteLine( CatchID);
+                Console.WriteLine( Weight);
                 // var rnID = _context.ReceivingNoteItems.Find(rniID).ReceivingNoteId;
                 // ReceivingNote rn = _context.ReceivingNotes.Find(rnID);
 
