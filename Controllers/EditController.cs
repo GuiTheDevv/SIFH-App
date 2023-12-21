@@ -62,40 +62,35 @@ public class EditController : Controller
         }
 
         [HttpPost]
-        public IActionResult EditItem(string ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
+        public async Task<IActionResult> EditItemAsync(string ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
         {
             try
             {
-                Console.WriteLine(rniID);
-                Console.WriteLine(ReferenceNumber);
-                Console.WriteLine( VesselID);
-                Console.WriteLine( CatchID);
-                Console.WriteLine( Weight);
-                // var rnID = _context.ReceivingNoteItems.Find(rniID).ReceivingNoteId;
-                // ReceivingNote rn = _context.ReceivingNotes.Find(rnID);
+                var rnID = _context.ReceivingNoteItems.Find(rniID).ReceivingNoteId;
+                ReceivingNote rn = _context.ReceivingNotes.Find(rnID);
 
-                // rn.ReferenceNumber = ReferenceNumber;
-                // rn.VesselId = VesselID;
+                rn.ReferenceNumber = ReferenceNumber;
+                rn.VesselId = VesselID;
 
-                // ReceivingNoteItem rni = _context.ReceivingNoteItems.Find(rniID);
+                ReceivingNoteItem rni = _context.ReceivingNoteItems.Find(rniID);
 
-                // rni.ProductId = CatchID;
-                // rni.Quantity = Weight;
-                // rni.UnitPrice = _context.Products.Find(CatchID).CurrentUnitPrice;
-                // rni.LineTotal = Weight * _context.Products.Find(CatchID).CurrentUnitPrice;
-                // rni.Temperature = Temperature;
-                // rni.GradeClassId = GradeID;
-                // if(Image != null){
-                //     using var memoryStream = new MemoryStream();
-                //     await Image.CopyToAsync(memoryStream);
-                //     rni.Image = memoryStream.ToArray();
-                // } else{
-                //     Console.WriteLine("No image");
-                // }
+                rni.ProductId = CatchID;
+                rni.Quantity = Weight;
+                rni.UnitPrice = _context.Products.Find(CatchID).CurrentUnitPrice;
+                rni.LineTotal = Weight * _context.Products.Find(CatchID).CurrentUnitPrice;
+                rni.Temperature = Temperature;
+                rni.GradeClassId = GradeID;
+                if(Image != null){
+                    using var memoryStream = new MemoryStream();
+                    await Image.CopyToAsync(memoryStream);
+                    rni.Image = memoryStream.ToArray();
+                } else{
+                    Console.WriteLine("No image");
+                }
 
-                // _context.Update(rn);
-                // _context.Update(rni);
-                // _context.SaveChanges();
+                _context.Update(rn);
+                _context.Update(rni);
+                _context.SaveChanges();
 
 
                 return RedirectToAction("Index", "Today");
