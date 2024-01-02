@@ -89,19 +89,18 @@ public class HomeController : Controller
         
                     if (existingNote == null)
                     {
-                        // Create a new ReceivingNote since it doesn't exist
-                        ReceivingNote newNote = new ReceivingNote
-                        {
-                            ReferenceNumber = item.ReferenceNumber,
-                            VesselId = item.VesselID,
-                            StatusClassId = item.GradeID,
-                            DateCreated = DateTime.Now
-                        };
-        
-                        _context.ReceivingNotes.Add(newNote);
-        
-                        Console.WriteLine("success adding rn");
-                        
+                        Console.WriteLine("Checking passed");
+                            ReceivingNote newNote = new ReceivingNote
+                            {
+                                ReferenceNumber = item.ReferenceNumber,
+                                VesselId = item.VesselID,
+                                StatusClassId = item.GradeID,
+                                DateCreated = DateTime.Now
+                            };
+            
+                            _context.ReceivingNotes.Add(newNote);
+                            Console.WriteLine("Success adding receiving note");
+
                         ReceivingNoteItem newNoteItem = new ReceivingNoteItem
                         {
                             ReceivingNoteId = _context.ReceivingNotes.Where(x => x.ReferenceNumber == item.ReferenceNumber).FirstOrDefault().ReceivingNoteId,

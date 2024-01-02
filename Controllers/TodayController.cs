@@ -19,7 +19,7 @@ public class TodayController : Controller
         public IActionResult Index()
         {
             
-             var date = DateTime.Today.AddDays(-1);
+             var date = DateTime.Today;
 
                 List<ReceivingNote> receivingNotes = new List<ReceivingNote>();
 
