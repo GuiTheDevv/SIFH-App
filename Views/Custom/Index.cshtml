@@ -34,19 +34,29 @@
     <!-- Card -->
     <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
       <form action="" method="post" enctype="multipart/form-data">
-        <div class="mb-4 sm:mb-8 relative">
-            <label for="startDatePicker" class="block mb-2 text-sm font-medium dark:text-white">Start Date</label>
-            <input type="date" id="startDatePicker" name="startDate"
-                   class="py-3 px-4 block w-full border-white border-2 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 dark:bg-white dark:border-gray-700 dark:text-slate-900 dark:focus:ring-gray-600 appearance-none"
-            >
-        </div>
-
-        <div class="mb-4 sm:mb-8 relative">
-            <label for="endDatePicker" class="block mb-2 text-sm font-medium dark:text-white">End Date</label>
-            <input type="date" id="endDatePicker" name="endDate"
-                   class="py-3 px-4 block w-full border-white border-2 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 dark:bg-white dark:border-gray-700 dark:text-slate-900 dark:focus:ring-gray-600 appearance-none"
-            >
-        </div>
+      <div class="mb-4 sm:mb-8 relative">
+          <label for="startDatePicker" class="block mb-2 text-sm font-medium dark:text-white">Start Date</label>
+          <input type="date" id="startDatePicker" name="startDate" onchange="syncEndDate()"
+                 class="py-3 px-4 block w-full border-white border-2 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 dark:bg-white dark:border-gray-700 dark:text-slate-900 dark:focus:ring-gray-600 appearance-none"
+          >
+      </div>
+      
+      <div class="mb-4 sm:mb-8 relative">
+          <label for="endDatePicker" class="block mb-2 text-sm font-medium dark:text-white">End Date</label>
+          <input type="date" id="endDatePicker" name="endDate"
+                 class="py-3 px-4 block w-full border-white border-2 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 dark:bg-white dark:border-gray-700 dark:text-slate-900 dark:focus:ring-gray-600 appearance-none"
+          >
+      </div>
+      
+      <script>
+          function syncEndDate() {
+              // Get the value of the start date input
+              var startDateValue = document.getElementById('startDatePicker').value;
+      
+              // Set the end date value to match the start date value
+              document.getElementById('endDatePicker').value = startDateValue;
+          }
+      </script>
 
 
         <div class="mb-4 sm:mb-8">
