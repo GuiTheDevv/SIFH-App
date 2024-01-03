@@ -83,7 +83,17 @@
                 @foreach(var grades in Model.GradeClasses){
                   <option value=@grades.GradeClassId>@grades.GradeClassName</option>
                 }
-              </select></div>
+              </select>
+            </div>
+
+            <div class="mb-4 sm:mb-8">
+              <label for="statusInput" class="block mb-2 text-sm font-medium dark:text-white">Status Class</label>
+              <select name="statusID" id="statusInput" class="mb-4 sm:mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-md text-sm py-3 px-4 block w-full text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700">
+                @foreach(var classes in Model.ProductStatusClasses){
+                  <option value=@classes.ProductStatusClassId>@classes.ProductStatusClassName</option>
+                }
+              </select>
+            </div>
 
             <div class="mb-4 sm:mb-8">
               <label for="temperatureInput" class="block mb-2 text-sm font-medium dark:text-white">Temperature (F&deg;)</label>
@@ -165,6 +175,9 @@
                           GRADE
                       </th>
                       <th scope="col" class="px-6 py-3">
+                          STATUS
+                      </th>
+                      <th scope="col" class="px-6 py-3">
                           TEMPERATURE
                       </th>
                       <th scope="col" class="px-6 py-3">
@@ -183,6 +196,9 @@
                     </td>
                     <td class="px-6 py-4 text-center">
                         @displayData.Grade
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        @displayData.ProductStatusClassName
                     </td>
                     <td class="px-6 py-4 text-center">
                         @displayData.Temperature &deg;F

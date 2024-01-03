@@ -29,28 +29,24 @@ public class CustomController : Controller
     }
 
         [HttpPost]
-        public IActionResult Index(DateTime datePicker)
+        public IActionResult Index(DateTime startDate, DateTime endDate)
         {
-            if(datePicker == default){
+            if(startDate == default && endDate == default){
                Console.WriteLine("invalid date");
             }
-             var date = datePicker.Date;
+            var StartDate = startDate.Date;
+            var EndDate = endDate.Date;
 
-                List<ReceivingNote> receivingNotes = new List<ReceivingNote>();
-
-                receivingNotes = _context.ReceivingNotes.Where(x => x.DateCreated.Date == date).ToList();
-
-                rnItems.Clear();
-
-                var todayDataView = new TodayDataView
-                {
-                    receivingNotes = receivingNotes,
-                    receivingNoteItems = rnItems
-                };
-
-                rn = receivingNotes;
-
-                return View("Index", todayDataView);
+            List<ReceivingNote> receivingNotes = new List<ReceivingNote>();
+            receivingNotes = _context.ReceivingNotes.Where(x => x.DateCreated.Date >= StartDate && x.DateCreated.Date <= EndDate).ToList();
+            rnItems.Clear();
+            var todayDataView = new TodayDataView
+            {
+                receivingNotes = receivingNotes,
+                receivingNoteItems = rnItems
+            };
+            rn = receivingNotes;
+            return View("Index", todayDataView);
         }
 
         [HttpPost]

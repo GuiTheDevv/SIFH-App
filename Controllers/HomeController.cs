@@ -22,6 +22,7 @@ public class HomeController : Controller
             Vessels = _context.Vessels.ToList(),
             Products = _context.Products.ToList(),
             GradeClasses = _context.GradeClasses.ToList(),
+            ProductStatusClasses = _context.ProductStatusClasses.ToList(),
             SubmittedDataList = formDataList
         };
 
@@ -31,7 +32,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> IndexAsync(string ReferenceNumber, int VesselID, int CatchID, decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
+    public async Task<IActionResult> IndexAsync(string ReferenceNumber, int VesselID, int CatchID, int statusID , decimal Weight, int GradeID, decimal Temperature, IFormFile Image)
     {
         FormData formData = new FormData {
             ReferenceNumber = ReferenceNumber,
@@ -39,6 +40,7 @@ public class HomeController : Controller
             CatchID = CatchID,
             Weight = Weight,
             GradeID = GradeID,
+            ProductStatusClassID = statusID,
             Temperature = Temperature
         };
 
@@ -54,6 +56,7 @@ public class HomeController : Controller
         // Fetch related entity data based on the provided IDs
         formData.CatchName = _context.Products.FirstOrDefault(p => p.ProductId == CatchID)?.ProductName ?? "";
         formData.Grade = _context.GradeClasses.FirstOrDefault(g => g.GradeClassId == GradeID)?.GradeClassName ?? "";
+        formData.ProductStatusClassName = _context.ProductStatusClasses.FirstOrDefault(x => x.ProductStatusClassId == statusID)?.ProductStatusClassName ?? "";
 
         formDataList.Add(formData); // Add the new form data to the existing static list
 
@@ -64,6 +67,7 @@ public class HomeController : Controller
             Vessels = _context.Vessels.ToList(),
             Products = _context.Products.ToList(),
             GradeClasses = _context.GradeClasses.ToList(),
+            ProductStatusClasses = _context.ProductStatusClasses.ToList(),
             SubmittedDataList = formDataList, // Use the static formDataList here
             LastReferenceNumber = lastFormData?.ReferenceNumber, // Display last reference number
             LastVesselID = lastFormData?.VesselID // Pre-select vessel as the last item in the table
@@ -99,6 +103,7 @@ public class HomeController : Controller
                             };
             
                             _context.ReceivingNotes.Add(newNote);
+                            _context.SaveChanges();
                             Console.WriteLine("Success adding receiving note");
 
                         ReceivingNoteItem newNoteItem = new ReceivingNoteItem
@@ -110,6 +115,7 @@ public class HomeController : Controller
                             LineTotal = item.Weight * _context.Products.Find(item.CatchID).CurrentUnitPrice,
                             Temperature = item.Temperature,
                             GradeClassId = item.GradeID,
+                            ProductStatusClassId = (int)item.ProductStatusClassID,
                             Image = item.ImageData
                         };
         

@@ -10,6 +10,8 @@ public class FormData {
     public int GradeID { get; set; }
     public string? Grade { get; set; }
     public decimal? Temperature { get; set; }
+    public int ProductStatusClassID { get; set; }
+    public string? ProductStatusClassName { get; set; }
     public byte[]? ImageData { get; set; }
     
 }
